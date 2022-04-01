@@ -2,7 +2,8 @@
 <%@ page import="java.util.List"%>
 <%@ page import="springproject.product.model.Product"%>
 <%@ page import="com.google.gson.*"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,19 +11,21 @@
 <title>PRODUCT INDEX PAGE</title>
 </head>
 <body>
-
-	
+	<img alt="no image"
+		src="http://localhost:8080/iSpanSpringMVC/images/orz.png" width="70"
+		height="70" />
 	<div style="margin-top: 20px">
-	<table>
-		<tbody>
-			<tr>
-				<th><a href="insertform.jsp"><button>Add New Product</button></a></th>
-				<th><button id="showAll">Show All Product</button></th>
-			</tr>
-		</tbody>
-	</table>
-	<table border="2" class="table table-bordered">
-		<thead>
+		<table>
+			<tbody>
+				<tr>
+					<th><a href="insertform.jsp"><button>Add New
+								Product</button></a></th>
+					<th><button id="showAll">Show All Product</button></th>
+				</tr>
+			</tbody>
+		</table>
+		<table border="2" class="table table-bordered">
+			<thead>
 				<tr>
 					<th><p id="totalNum"></p></th>
 					<th><button class="product_Type" id="sort">Type</button> <input
@@ -46,10 +49,11 @@
 					<th>Image</th>
 				</tr>
 			</thead>
-		<tbody id="resultTable"></tbody>
-	</table>
+			<tbody id="resultTable"></tbody>
+		</table>
 	</div>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+	 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="../../js/product.js"></script>
 
 </body>

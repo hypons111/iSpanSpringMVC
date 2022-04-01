@@ -7,14 +7,12 @@ const sorts = document.querySelectorAll('#sort')
 let currentData = []
 let rawData = ""
 let sortStates = "ASC"
-alert("hahaha")
+
 // 取得 json
 axios
 	.get(BASE_URL)
 	.then(response => {
 		return new Promise(resolve => {
-		console.log("abc")
-		console.log(response.data)
 			resolve(response.data)
 			rawData = response.data
 		})

@@ -35,7 +35,9 @@ public class ProductDao implements IProductDao{
 		System.out.println("ProductDao : selectAll");
 		Session session = sessionFactory.openSession();
 		Query<Product> query = session.createQuery("from Product", Product.class);
-		return query.list();
+		List<Product> list = query.list();
+		session.close();
+		return list;
 	}
 
 	
@@ -45,8 +47,10 @@ public class ProductDao implements IProductDao{
 		Product result = session.get(Product.class, product.getProduct_ID());
 		if (result == null) {
 			session.save(product);
+			session.close();
 			return product;
 		}
+		session.close();
 		return null;
 	}
 
