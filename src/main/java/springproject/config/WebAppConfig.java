@@ -42,8 +42,8 @@ public class WebAppConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		// 把 ResourceLocations 縮短為 ResourceHandler
 		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/product/js/");
-//		registry.addResourceHandler("/image/**").addResourceLocations("/WEB-INF/resources/product/image/");
 		registry.addResourceHandler("/admin/product/image/**").addResourceLocations("/WEB-INF/resources/product/image/");
 																
 	}

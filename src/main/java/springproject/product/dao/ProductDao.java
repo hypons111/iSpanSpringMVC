@@ -1,13 +1,18 @@
 package springproject.product.dao;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import springproject.product.model.Product;
 
@@ -34,11 +39,15 @@ public class ProductDao implements IProductDao {
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Product.class, id);
 	}
-	
+
 	public Product insert(Product product) {
+		System.out.println("ProductDao: insert");
 		Session session = sessionFactory.getCurrentSession();
+		// 先用假資料建立 product, 有 id 後才能把 id 用作 image 名稱, 因為 id 是 sql 建立資料時自動產生
 		session.save(product);
+		// result 是連接到資料庫的某一筆資料
 		Product result = session.get(Product.class, product.getProduct_ID());
+		// 更改imageName
 		result.setProduct_Image(product.getProduct_ID() + ".jpg");
 		return result;
 	}
@@ -58,7 +67,6 @@ public class ProductDao implements IProductDao {
 		return result;
 	}
 
-	
 	public boolean delete(int id) {
 		System.out.println("ProductDao: delete: " + id);
 		Session session = sessionFactory.getCurrentSession();
@@ -71,5 +79,15 @@ public class ProductDao implements IProductDao {
 			return true;
 		}
 		return false;
+	}
+
+	public void insertImage(HttpServletRequest request, Product product, MultipartFile imageFile) throws IllegalStateException, IOException {
+		// 把圖片傳到資料夾
+		String saveTempFileDir = request.getSession().getServletContext().getRealPath("/") + "WEB-INF/resources/product/image/";
+		File saveTempDirFile = new File(saveTempFileDir);
+		saveTempDirFile.mkdirs();
+		String saveFilePath = saveTempFileDir + product.getProduct_ID() + ".jpg";
+		File saveFile = new File(saveFilePath);
+		imageFile.transferTo(saveFile);
 	}
 }

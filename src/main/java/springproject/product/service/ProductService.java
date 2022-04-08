@@ -1,9 +1,14 @@
 package springproject.product.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import springproject.product.dao.IProductDao;
 import springproject.product.model.Product;
@@ -40,8 +45,13 @@ public class ProductService implements IProductService {
 //		return productDao.update(id, name, type, stock, cost, price, image);
 //	}
 
-
 	public boolean delete(int id) {
 		return productDao.delete(id);
+	}
+
+	public void insertImage(HttpServletRequest request, Product product, MultipartFile imageFile)
+			throws IllegalStateException, IOException {
+		productDao.insertImage(request, product, imageFile);
+
 	}
 }

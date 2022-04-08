@@ -65,8 +65,6 @@ public class ProductController {
 			@RequestParam("stock") int stock, @RequestParam("cost") double cost, @RequestParam("price") double price,
 			@RequestParam("file") MultipartFile imageFile, HttpServletRequest request)
 			throws IllegalStateException, IOException {
-		String description = "temp";
-		String imageName = "";
 
 		// 判斷是否要新增產品種類
 		Set<String> productTypeNameResultSet = new HashSet<>();
@@ -77,26 +75,15 @@ public class ProductController {
 			productTypeService.insert(new ProductType(type));
 		}
 
-		// 先用假資料建立 product, 有 id 後才能把 id 用作 image 名稱, 因為 id 是 sql 建立資料時自動產生
-		// productResult 是連接到資料庫的某一筆資料
-		Product productResult = productService.insert(new Product(0, name, type, stock, cost, price, imageName, description));
-		imageName = productResult.getProduct_ID() + ".jpg";
-		
-		// 把圖片傳到資料夾
-		String saveTempFileDir = request.getSession().getServletContext().getRealPath("/") + "WEB-INF/resources/product/image/";
-		File saveTempDirFile = new File(saveTempFileDir);
-		saveTempDirFile.mkdirs();
-		String saveFilePath = saveTempFileDir + imageName;
-		File saveFile = new File(saveFilePath);
-		imageFile.transferTo(saveFile);
+		// 新增產品
+		Product product = productService.insert(new Product(0, name, type, stock, cost, price, "temp", "temp"));
 
+		// 把圖片儲存到資料夾
+		productService.insertImage(request, product, imageFile);
 
-		//更改imageName
-		productResult.setProduct_Image(imageName);
-		
 		return new ModelAndView("redirect:/admin/product/productindex");
 	}
-	
+
 	@RequestMapping(path = "update", method = RequestMethod.GET)
 	public String getUpdate() {
 		return "product/updateform";
@@ -107,26 +94,18 @@ public class ProductController {
 			@RequestParam("type") String type, @RequestParam("stock") int stock, @RequestParam("cost") double cost,
 			@RequestParam("price") double price, @RequestParam("image") MultipartFile imageFile,
 			HttpServletRequest request) throws ServletException, IllegalStateException, IOException {
-
 		String imageName = id + ".jpg";
 
-		if (imageFile.getOriginalFilename() != "") {
-			String saveTempFileDir = request.getSession().getServletContext().getRealPath("/") + "WEB-INF/resources/product/image/";
-			File saveTempDirFile = new File(saveTempFileDir);
-			saveTempDirFile.mkdirs();
+		// 更新產品
+		Product product = productService.update(new Product(id, name, type, stock, cost, price, imageName, "temp"));
 
-			// 把圖片傳到資料夾
-			String saveFilePath = saveTempFileDir + imageName;
-			File saveFile = new File(saveFilePath);
-			imageFile.transferTo(saveFile);
-			System.out.println(saveFilePath);
+		// 判斷是否要更新圖片
+		if (imageFile.getOriginalFilename() != "") {
+			productService.insertImage(request, product, imageFile);
 		}
 
-		productService.update(new Product(id, name, type, stock, cost, price, imageName, "temp"));
 		return new ModelAndView("redirect:/admin/product/productindex");
 	}
-
-
 
 	@RequestMapping(path = "delete", method = RequestMethod.GET)
 	public ModelAndView getDelete(@RequestParam("Product_ID") int id) {
