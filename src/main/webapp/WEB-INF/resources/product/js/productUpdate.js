@@ -1,8 +1,8 @@
 const queryString = window.location.search
 const urlParams = new URLSearchParams(queryString)
 const targetID = urlParams.get('Product_ID')
-const PRODUCT_URL = "http://localhost:8080/iSpanSpring/admin/product/index"
-const PRODUCT_TYPE_URL = "http://localhost:8080/iSpanSpring/admin/product/type/index"
+const PRODUCT_URL = "http://localhost:8080/iSpanSpringMVC/admin/product/productjson"
+const PRODUCT_TYPE_URL = "http://localhost:8080/iSpanSpringMVC/admin/product/producttypejson"
 
 let productRawData = []
 let productTypeRawData = []
@@ -39,6 +39,8 @@ function showData(data) {
 	resultTable.innerHTML = contents
 	oldProductName = data.product_Name
 }
+
+
 
 function addEventListeners(data) {
 	const inputs = document.querySelectorAll("table .input")

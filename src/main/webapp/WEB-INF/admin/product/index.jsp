@@ -12,13 +12,13 @@
 </head>
 <body>
 	<img alt="no image"
-		src="http://localhost:8080/iSpanSpringMVC/images/orz.png" width="70"
+		src="http://localhost:8080/iSpanSpringMVC/images/orz.jpg" width="70"
 		height="70" />
 	<div style="margin-top: 20px">
 		<table>
 			<tbody>
 				<tr>
-					<th><a href="insertform.jsp"><button>Add New
+					<th><a href="insert"><button>Add New
 								Product</button></a></th>
 					<th><button id="showAll">Show All Product</button></th>
 				</tr>

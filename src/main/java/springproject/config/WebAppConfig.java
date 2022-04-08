@@ -3,6 +3,7 @@ package springproject.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -21,6 +22,13 @@ public class WebAppConfig implements WebMvcConfigurer {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
+	
+	@Bean
+	public CommonsMultipartResolver multipartResolver() {
+		CommonsMultipartResolver cmr = new CommonsMultipartResolver();
+		cmr.setDefaultEncoding("UTF-8");
+		return cmr;
+	}
 
 	// 取得 WEB-INF 中的 jsp
 	@Bean
@@ -34,7 +42,9 @@ public class WebAppConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/js/");
-		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/resources/images/");
+		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/resources/product/js/");
+//		registry.addResourceHandler("/image/**").addResourceLocations("/WEB-INF/resources/product/image/");
+		registry.addResourceHandler("/admin/product/image/**").addResourceLocations("/WEB-INF/resources/product/image/");
+																
 	}
 }

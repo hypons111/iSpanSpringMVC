@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/iSpanSpringMVC/admin/product/json";
+const BASE_URL = "http://localhost:8080/iSpanSpringMVC/admin/product/productjson";
 const resultTable = document.querySelector("#resultTable")
 const id = document.querySelector('#id')
 const columnSearchs = document.querySelectorAll('.columnSearch')
@@ -82,8 +82,9 @@ function showData(data) {
 		contents += "<td>" + data[i].product_Stock + "</td>"
 		contents += "<td>" + data[i].product_Cost + "</td>"
 		contents += "<td>" + data[i].product_Price + "</td>"
-		contents += "<td><img src='/images/product/" + data[i].product_Image + "?" + Math.random() + "' width='50px'></td>"
-		contents += "<td><a href=updateform.jsp?Product_ID=" + data[i].product_ID + "><button>Edit</button></a></td>"
+		contents += "<td><img src='image/" + data[i].product_Image + "?" + Math.random() + "' width='50px'></td>"
+	         //	         <img src="images/member/${member.imagefilename}" style="width:100px;">
+		contents += "<td><a href=update?Product_ID=" + data[i].product_ID + "><button>Edit</button></a></td>"
 		contents += "<td><a href=delete?Product_ID=" + data[i].product_ID + "><button>Delete</button></a></td></tr>"
 	}
 	resultTable.innerHTML = contents

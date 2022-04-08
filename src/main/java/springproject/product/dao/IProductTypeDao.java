@@ -6,10 +6,10 @@ import springproject.product.model.ProductType;
 
 public interface IProductTypeDao {
 
-	ProductType insert(ProductType productType);
-
 	ProductType selectByID(int id);
 
 	List<ProductType> selectAll();
+
+	ProductType insert(ProductType productType);
 
 }

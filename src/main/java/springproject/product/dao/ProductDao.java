@@ -12,61 +12,48 @@ import org.springframework.transaction.annotation.Transactional;
 import springproject.product.model.Product;
 
 @Transactional
-@Repository //("productDao")
-public class ProductDao implements IProductDao{
+@Repository
+public class ProductDao implements IProductDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	
 
 	public ProductDao() {
-		
 	}
 
-	
-	public Product selectByID(int id) {
-		Session session = sessionFactory.getCurrentSession();
-		return session.get(Product.class, id);
-	}
-
-	
 	public List<Product> selectAll() {
 		System.out.println("ProductDao : selectAll");
-		Session session = sessionFactory.openSession();
-		Query<Product> query = session.createQuery("from Product", Product.class);
-		List<Product> list = query.list();
-		session.close();
+		Session session = sessionFactory.getCurrentSession();
+		Query<Product> result = session.createQuery("from Product", Product.class);
+		List<Product> list = result.list();
 		return list;
 	}
 
+	public Product selectByID(int id) {
+		System.out.println("ProductDao: selectByID: " + id);
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Product.class, id);
+	}
 	
 	public Product insert(Product product) {
-		System.out.println("ProductDao: insert: " + product);
 		Session session = sessionFactory.getCurrentSession();
+		session.save(product);
 		Product result = session.get(Product.class, product.getProduct_ID());
-		if (result == null) {
-			session.save(product);
-			session.close();
-			return product;
-		}
-		session.close();
-		return null;
+		result.setProduct_Image(product.getProduct_ID() + ".jpg");
+		return result;
 	}
 
-	
-	public Product update(int id, String name, String type, int stock, double cost, double price, String Description) {
-		System.out.println("ProductDao : update : " + id + ", " + name + ", " + type + ", " + stock + ", " + cost + ", "
-				+ price + ", " + Description);
+	public Product update(Product product) {
+		System.out.println("ProductDao: update : ");
 		Session session = sessionFactory.getCurrentSession();
-		Product result = session.get(Product.class, id);
+		Product result = session.get(Product.class, product.getProduct_ID());
 		if (result != null) {
-			result.setProduct_Name(name);
-			result.setProduct_Type(type);
-			result.setProduct_Stock(stock);
-			result.setProduct_Cost(cost);
-			result.setProduct_Price(price);
-			result.setProduct_Description(Description);
+			result.setProduct_Name(product.getProduct_Name());
+			result.setProduct_Type(product.getProduct_Type());
+			result.setProduct_Stock(product.getProduct_Stock());
+			result.setProduct_Cost(product.getProduct_Cost());
+			result.setProduct_Price(product.getProduct_Price());
+			result.setProduct_Image(product.getProduct_Image());
 		}
 		return result;
 	}

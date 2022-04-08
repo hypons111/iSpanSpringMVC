@@ -6,8 +6,8 @@ const type = document.querySelector("#type")
 const submit = document.querySelector("#submit")
 const inputs = document.querySelectorAll(".input")
 const submitResult = document.querySelector("#submitResult")
-const PRODUCT_URL = "http://localhost:8080/iSpanSpring/admin/product/index"
-const PRODUCT_TYPE_URL = "http://localhost:8080/iSpanSpring/admin/product/type/index"
+const PRODUCT_URL = "http://localhost:8080/iSpanSpringMVC/admin/product/productjson"
+const PRODUCT_TYPE_URL = "http://localhost:8080/iSpanSpringMVC/admin/product/producttypejson"
 let productRawData = []
 let productTypeRawData = []
 

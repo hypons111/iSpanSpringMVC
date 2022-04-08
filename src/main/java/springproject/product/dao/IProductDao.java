@@ -12,7 +12,8 @@ public interface IProductDao {
 
 	Product insert(Product product);
 
-	Product update(int id, String name, String type, int stock, double cost, double price, String Description);
+	Product update(Product product);
+//	Product update(int id, String name, String type, int stock, double cost, double price, String image);
 
 	boolean delete(int id);
 

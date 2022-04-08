@@ -9,41 +9,38 @@ import springproject.product.dao.IProductDao;
 import springproject.product.model.Product;
 
 @Transactional
-@Service //("productService")
-public class ProductService implements IProductService{
+@Service
+public class ProductService implements IProductService {
 
 	@Autowired
 	private IProductDao productDao;
-	
-	
 
 	public ProductService() {
 	}
 
-	
-	public Product selectByID(int id) {
-		System.out.println("ProductService : selectByID");
-		return productDao.selectByID(id);
-	}
-	
-	
 	public List<Product> selectAll() {
 		System.out.println("ProductService : selectAll");
 		return productDao.selectAll();
 	}
 
-	
+	public Product selectByID(int id) {
+		System.out.println("ProductService : selectByID");
+		return productDao.selectByID(id);
+	}
+
 	public Product insert(Product product) {
 		return productDao.insert(product);
 	}
 
-	
-	public Product update(int id, String name, String type, int stock, double cost, double price, String Description) {
-		System.out.println("ProductService: " + "update: ");
-		return productDao.update(id, name, type, stock, cost, price, Description);
+	public Product update(Product product) {
+		return productDao.update(product);
 	}
+//	public Product update(int id, String name, String type, int stock, double cost, double price, String image) {
+//		System.out.println("ProductService: " + "update: ");
+//		return productDao.update(id, name, type, stock, cost, price, image);
+//	}
 
-	
+
 	public boolean delete(int id) {
 		return productDao.delete(id);
 	}
